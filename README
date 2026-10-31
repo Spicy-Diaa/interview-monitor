@@ -1,0 +1,30 @@
+# Interview Monitor (AI Track)
+
+Detects potential attention events during a video interview using the webcam.
+It does NOT prove misconduct. Every event is an indicator for human review.
+
+## How it works
+- MediaPipe Face Landmarker (model file: face_landmarker.task) finds face and iris points.
+- OpenCV opens the webcam, draws status text, and saves snapshots.
+- If head turn / looking away / no face / multiple faces lasts longer than
+  SUSPICIOUS_SECONDS, a snapshot is saved with the time and reason in its filename.
+
+## Setup
+```
+pip install opencv-python mediapipe
+```
+
+## Run
+```
+python monitor.py
+```
+Type `y` to consent, press Q in the video window to quit. A session summary is printed.
+
+## Settings (top of monitor.py)
+- HEAD_TURN_LIMIT, GAZE_LIMIT: sensitivity
+- SUSPICIOUS_SECONDS: how long before saving a snapshot
+- COOLDOWN_SECONDS: gap between snapshots
+- GRACE_SECONDS: short breaks allowed before the timer resets
+
+## Note
+Saved images go to `cheating_captures/` (do not commit this folder).
